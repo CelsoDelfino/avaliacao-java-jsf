@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+    <title>TITULO</title>
+</h:head>
+
+<h:body>
+    <p:messages autoUpdate="true" id="msg"/>
+
+    <h:form id="frm">
+        <p:panel header="Cadastro de jogos">
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Nome do jogo"/>
+                <p:inputText value="#{bean.jogo.nome}" required="true" requiredMessage="campo nome obrigatório" size="30"/>
+
+                <h:outputText value="Categoria"/>
+                <h:selectOneMenu value="#{bean.jogo.categoria}" required="true" requiredMessage="campo categoria obrigatório">
+                    <f:selectItem itemLabel="Selecione a categoria" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="AÇÃO" itemValue="ACAO"/>
+                    <f:selectItem itemLabel="TERROR" itemValue="TERROR"/>
+                    <f:selectItem itemLabel="LUTA" itemValue="LUTA"/>
+                    <f:selectItem itemLabel="CORRIDA" itemValue="CORRIDA"/>
+                    <f:selectItem itemLabel="FUTEBOL" itemValue="FUTEBOL"/>
+                    <f:selectItem itemLabel="ESTRATÉGIA" itemValue="ESTRATEGIA"/>
+                    <f:selectItem itemLabel="BATTLE-ROYALE" itemValue="BATTLE-ROYALE"/>
+                    <f:selectItem itemLabel="RPG" itemValue="RPG"/>
+                    <f:selectItem itemLabel="AVENTURA" itemValue="AVENTURA"/>
+                    <f:selectItem itemLabel="OUTROS" itemValue="OUTROS"/>
+                </h:selectOneMenu>
+
+                <p:outputLabel value="Empresa desenvolvedora"/>
+                <p:inputText value="#{bean.jogo.empresa}" required="true" requiredMessage="campo empresa obrigatório"
+                             size="30"/>
+
+                <p:outputLabel value="Preço"/>
+                <p:inputText value="#{bean.jogo.preco}" required="true" requiredMessage="campo preco obrigatório" size="4"/>
+                <h:outputText/>
+
+                <p:outputLabel/>
+
+                <p:commandButton value="Adicionar" action="#{bean.inserir}" update="frm tabela"
+                                 style="margin-top:10px"/>
+            </h:panelGrid>
+        </p:panel>
+
+
+    <h1>Lista de <strong>Jogos</strong></h1>
+
+    <p:dataTable value="#{bean.jogos}" var="j" id="tabela" paginator="true" rows="4"
+                 emptyMessage="Nenhum registro adicionado">
+
+        <p:column headerText="Jogo">
+            <p:outputLabel value=" #{j.nome}"/>
+        </p:column>
+
+        <p:column headerText="Categoria">
+            <p:outputLabel value=" #{j.categoria}"/>
+        </p:column>
+
+        <p:column headerText="Empresa">
+            <p:outputLabel value=" #{j.empresa}"/>
+        </p:column>
+
+        <p:column headerText="Preco">
+            <p:outputLabel value=" #{j.preco}"/>
+        </p:column>
+
+        <p:column headerText="Editar" width="100">
+            <h:commandButton value="Editar" update="@form" process="@this">
+                <f:setPropertyActionListener value="#{j}" target="#{bean.jogo}"/>
+            </h:commandButton>
+        </p:column>
+
+        <p:column headerText="Excluir" width="100">
+            <h:commandButton action="#{bean.exclui}"  value="Excluir" update="tabela" process="@this">
+                <f:setPropertyActionListener value="#{j}" target="#{bean.jogo}"/>
+            </h:commandButton>
+        </p:column>
+    </p:dataTable>
+    </h:form>
+</h:body>
+</html>
